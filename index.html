@@ -1,0 +1,2645 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chandrima Banik — Prompt Engineer & BCA Student</title>
+  <meta name="description" content="Portfolio of Chandrima Banik: BCA Student at Swami Vivekananda University, Aspiring Prompt Engineer, and AI Enthusiast exploring structured LLM interactions." />
+  <meta property="og:title" content="Chandrima Banik — Prompt Engineer & BCA Student" />
+  <meta property="og:description" content="Personal portfolio and AI prompt engineering lab by Chandrima Banik." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       RESET & ROOT VARIABLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-base: #050505;
+      --bg-surface: #0a0a0c;
+      --bg-card: rgba(255, 255, 255, 0.025);
+      --bg-card-hover: rgba(255, 255, 255, 0.045);
+      --bg-glass: rgba(255, 255, 255, 0.03);
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(124, 58, 237, 0.5);
+      --border-glow: rgba(124, 58, 237, 0.35);
+
+      --text-primary: #ffffff;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --text-accent: #a78bfa;
+      --text-cyan: #38bdf8;
+
+      --accent-violet: #7c3aed;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+
+      --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient dynamic flashlight/glow attached to mouse */
+    #cursor-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, rgba(56, 189, 248, 0.02) 40%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: opacity 0.5s ease;
+      opacity: 0.85;
+      will-change: transform;
+    }
+
+    /* Background tech grid overlay - Sleek Interface radial dots */
+    .bg-grid-layer {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Sleek Interface Utilities */
+    .accent-glow {
+      text-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass:hover {
+      border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-purple);
+      box-shadow: 0 0 10px var(--accent-purple);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.4); opacity: 1; }
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 28px;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      white-space: nowrap;
+      border: 1px solid transparent;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #000000;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-violet);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(124, 58, 237, 0.55);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      border-color: var(--border-subtle);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-focus);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+      color: #ffffff;
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-accent:hover {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      border-color: rgba(167, 139, 250, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+    }
+
+    .btn-icon {
+      padding: 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Tag / Pill */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+
+    .badge-accent {
+      background: rgba(124, 58, 237, 0.12);
+      border-color: rgba(124, 58, 237, 0.3);
+      color: var(--text-accent);
+    }
+
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.25);
+      color: var(--text-cyan);
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      transition: all var(--transition-smooth);
+    }
+
+    .site-header.scrolled {
+      padding: 12px 0;
+      background: rgba(5, 5, 5, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-logo span {
+      color: var(--accent-purple);
+      text-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color var(--transition-fast);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #ffffff;
+    }
+
+    .nav-link.active {
+      color: #c4b5fd;
+      text-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+      border-radius: 2px;
+    }
+
+    /* Mobile Hamburger */
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 8px 10px;
+      font-size: 1.25rem;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 85%;
+      max-width: 360px;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 150;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 140;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 130px;
+      padding-bottom: 80px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 3.75rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      background: linear-gradient(180deg, #ffffff 40%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-role {
+      font-size: 1.375rem;
+      font-weight: 500;
+      color: var(--text-accent);
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-intro {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #c4b5fd;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-purple);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-purple);
+      animation: pulse-dot 1.8s infinite;
+    }
+
+    /* Hero Futuristic AI Visual */
+    .hero-visual-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orb-core {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #8b5cf6 0%, #6366f1 50%, rgba(124, 58, 237, 0.2) 100%);
+      filter: blur(36px);
+      opacity: 0.55;
+      animation: float-slow 8s infinite alternate ease-in-out;
+    }
+
+    .tech-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(124, 58, 237, 0.08);
+    }
+
+    .tech-frame-decor-line {
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+    }
+
+    .tech-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .window-dot:nth-child(1) { background: #ef4444; opacity: 0.7; }
+    .window-dot:nth-child(2) { background: #f59e0b; opacity: 0.7; }
+    .window-dot:nth-child(3) { background: #10b981; opacity: 0.7; }
+
+    .tech-stream {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    .stream-line {
+      display: flex;
+      gap: 12px;
+      opacity: 0.85;
+      transition: all 0.3s ease;
+    }
+
+    .stream-line.active {
+      color: #38bdf8;
+      font-weight: 500;
+    }
+
+    .prompt-syntax-kw { color: #c084fc; }
+    .prompt-syntax-str { color: #34d399; }
+    .prompt-syntax-num { color: #f472b6; }
+    .prompt-syntax-comment { color: #64748b; font-style: italic; }
+
+    .floating-badge-node {
+      position: absolute;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(18, 20, 28, 0.9);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 3;
+    }
+
+    .floating-badge-node-1 {
+      bottom: -15px;
+      left: -20px;
+      animation: float-y 5s infinite alternate ease-in-out;
+    }
+
+    .floating-badge-node-2 {
+      top: -15px;
+      right: -15px;
+      animation: float-y 6s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes float-slow {
+      0% { transform: scale(0.9) translate(-10px, -10px); }
+      100% { transform: scale(1.15) translate(15px, 15px); }
+    }
+
+    @keyframes float-y {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-12px); }
+    }
+
+    /* ==========================================================================
+       SECTION WRAPPERS
+       ========================================================================== */
+    .section {
+      padding: 110px 0;
+      position: relative;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    }
+
+    /* ==========================================================================
+       ABOUT ME SECTION
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: start;
+      margin-top: 40px;
+    }
+
+    .about-bio {
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    .about-bio p {
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-violet), var(--accent-purple));
+    }
+
+    .info-card-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-accent);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .info-item {
+      margin-bottom: 16px;
+    }
+
+    .info-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .info-sub {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       PROMPT ENGINEERING LAB / PROJECTS
+       ========================================================================== */
+    .lab-header-row {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .lab-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      letter-spacing: 0.04em;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .filter-btn.active {
+      background: rgba(124, 58, 237, 0.18);
+      border-color: rgba(124, 58, 237, 0.5);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.35);
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 240px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 8px 16px 8px 36px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: all var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.25);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Project Cards Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-smooth);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-focus);
+      background: var(--bg-card-hover);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.18);
+    }
+
+    .project-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .project-title {
+      font-size: 1.3125rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .project-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-view-prompt {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      background: transparent;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-view-prompt:hover {
+      color: var(--text-accent);
+      transform: translateX(2px);
+    }
+
+    .btn-quick-copy {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-quick-copy:hover {
+      background: rgba(124, 58, 237, 0.2);
+      color: #ffffff;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+    }
+
+    /* ==========================================================================
+       MODAL STYLES (VIEW PROMPT)
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      background: #08090d;
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 780px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(124, 58, 237, 0.25);
+      transform: scale(0.96) translateY(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .modal-overlay.active .modal-window {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .modal-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--border-focus);
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .modal-desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .prompt-code-container {
+      position: relative;
+      background: #030406;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      user-select: text;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Toast Notification */
+    #toast-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #08090d;
+      border: 1px solid var(--border-focus);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(124, 58, 237, 0.25);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: toast-in 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-icon {
+      color: var(--accent-purple);
+    }
+
+    @keyframes toast-in {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       SKILLS SECTION
+       ========================================================================== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 40px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all var(--transition-smooth);
+    }
+
+    .skill-card:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(124, 58, 237, 0.15);
+    }
+
+    .skill-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-accent);
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .skill-card:hover .skill-icon-wrap {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: rgba(124, 58, 237, 0.5);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.35);
+    }
+
+    .skill-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .skill-category {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ==========================================================================
+       EDUCATION SECTION (TIMELINE)
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      margin-top: 40px;
+      max-width: 800px;
+      padding-left: 32px;
+    }
+
+    .timeline-track {
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-violet), var(--accent-purple), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-node {
+      position: absolute;
+      left: -32px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 2px solid var(--accent-purple);
+      box-shadow: 0 0 12px var(--accent-purple);
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 28px;
+      transition: all var(--transition-smooth);
+    }
+
+    .timeline-card:hover {
+      border-color: var(--border-focus);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(124, 58, 237, 0.15);
+    }
+
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-school {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .timeline-degree {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+    }
+
+    .timeline-loc {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .timeline-desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ==========================================================================
+       PHILOSOPHY SECTION
+       ========================================================================== */
+    .philosophy-card-main {
+      background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.12) 0%, rgba(8, 9, 13, 0.95) 60%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    .phil-step {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 24px;
+      transition: all var(--transition-smooth);
+    }
+
+    .phil-step:hover {
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(124, 58, 237, 0.15);
+    }
+
+    .phil-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent-purple);
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .phil-step-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .phil-step-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       CONTACT SECTION
+       ========================================================================== */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 54px 44px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      right: -100px;
+      bottom: -100px;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--transition-fast);
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-focus);
+      transform: translateX(4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(124, 58, 237, 0.15);
+    }
+
+    .contact-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(124, 58, 237, 0.12);
+      color: var(--text-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .contact-item:hover .contact-item-icon {
+      background: rgba(124, 58, 237, 0.25);
+      color: #ffffff;
+    }
+
+    .contact-item-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .contact-item-value {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      padding: 48px 0 36px 0;
+      border-top: 1px solid var(--border-subtle);
+      background: #040406;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .footer-tagline {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .back-to-top-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .back-to-top-btn:hover {
+      background: rgba(124, 58, 237, 0.18);
+      color: #ffffff;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Scroll reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .hero-visual-card {
+        max-width: 400px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 36px 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 2.75rem;
+      }
+
+      .section-title {
+        font-size: 1.875rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lab-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor following dynamic glow -->
+  <div id="cursor-glow"></div>
+
+  <!-- Background decorative grid -->
+  <div class="bg-grid-layer"></div>
+
+  <!-- ==========================================================================
+       NAVIGATION
+       ========================================================================== -->
+  <header class="site-header" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="brand-logo" id="nav-brand">
+          CHANDRIMA<span>.</span>
+        </a>
+
+        <ul class="nav-links" id="desktop-nav">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle Navigation Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-backdrop" id="mobile-backdrop"></div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px;">
+        <span class="brand-logo">CHANDRIMA<span>.</span></span>
+        <button class="modal-close-btn" id="close-drawer-btn" aria-label="Close menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav style="display: flex; flex-direction: column; gap: 20px;">
+        <a href="#hero" class="nav-link mobile-link">Home</a>
+        <a href="#about" class="nav-link mobile-link">About</a>
+        <a href="#projects" class="nav-link mobile-link">Projects</a>
+        <a href="#skills" class="nav-link mobile-link">Skills</a>
+        <a href="#education" class="nav-link mobile-link">Education</a>
+        <a href="#contact" class="nav-link mobile-link">Contact</a>
+      </nav>
+    </div>
+
+    <div style="border-top: 1px solid var(--border-subtle); padding-top: 20px;">
+      <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">GET IN TOUCH</p>
+      <a href="mailto:banikchandrima00@gmail.com" style="color: #ffffff; text-decoration: none; font-size: 0.875rem; word-break: break-all;">banikchandrima00@gmail.com</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <div class="hero-content">
+            <div class="eyebrow" id="hero-eyebrow">
+              <span class="eyebrow-dot"></span>
+              HELLO, I'M
+            </div>
+
+            <h1 class="hero-title" id="hero-name">
+              CHANDRIMA BANIK
+            </h1>
+
+            <div class="hero-role" id="hero-role-title">
+              Prompt Engineer &amp; BCA Student
+            </div>
+
+            <p class="hero-intro">
+              I explore the intersection of artificial intelligence, prompt engineering and creative problem solving — turning ideas into structured AI experiences.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#projects" class="btn btn-primary" id="hero-view-work">
+                VIEW MY WORK
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+
+              <a href="#contact" class="btn btn-secondary" id="hero-contact">
+                CONTACT ME
+              </a>
+            </div>
+
+            <div>
+              <div class="status-pill">
+                <span class="status-dot"></span>
+                OPEN TO LEARNING &amp; OPPORTUNITIES
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Abstract Futuristic AI Visual -->
+          <div class="hero-visual-card">
+            <div class="orb-core"></div>
+            
+            <div class="tech-frame">
+              <div class="tech-frame-decor-line"></div>
+              
+              <div class="tech-header">
+                <div class="window-dots">
+                  <div class="window-dot"></div>
+                  <div class="window-dot"></div>
+                  <div class="window-dot"></div>
+                </div>
+                <span class="badge badge-accent">neural.core.v2</span>
+              </div>
+
+              <div class="tech-stream">
+                <div class="stream-line"><span class="prompt-syntax-comment">// initializing system instructions</span></div>
+                <div class="stream-line"><span class="prompt-syntax-kw">&gt; prompt.init()</span></div>
+                <div class="stream-line">{ <span class="prompt-syntax-str">"role"</span>: <span class="prompt-syntax-str">"Architect"</span>, <span class="prompt-syntax-str">"context"</span>: <span class="prompt-syntax-str">"AI"</span> }</div>
+                <div class="stream-line"><span class="prompt-syntax-kw">const</span> constraints = [<span class="prompt-syntax-str">"precision"</span>, <span class="prompt-syntax-str">"clarity"</span>];</div>
+                <div class="stream-line active"><span class="prompt-syntax-kw">&gt; generate</span>(intent) <span class="prompt-syntax-num">→ intelligent</span></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>LATENCY: 18ms</span>
+                <span style="color: #34d399;">TOKENS: 4,096</span>
+              </div>
+            </div>
+
+            <div class="floating-badge-node floating-badge-node-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Zero-Shot Optimized</span>
+            </div>
+
+            <div class="floating-badge-node floating-badge-node-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Structured Context</span>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         ABOUT ME SECTION
+         ========================================================================== -->
+    <section class="section reveal" id="about">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          BACKGROUND
+        </div>
+        <h2 class="section-title">ABOUT ME</h2>
+        <p class="section-sub">A student exploring the future of human-AI interaction.</p>
+
+        <div class="about-grid">
+          <div class="about-bio">
+            <p>
+              I'm Chandrima Banik, a Bachelor of Computer Applications student at Swami Vivekananda University, Barrackpore. My interest lies in Artificial Intelligence, Prompt Engineering and technology-driven creativity.
+            </p>
+            <p>
+              I enjoy understanding how structured instructions can transform the way people interact with AI systems. Through my projects, I experiment with prompt design, context, role prompting, content generation and AI-assisted workflows.
+            </p>
+            <p>
+              As models evolve, effective communication between human intent and machine execution is the most crucial bridge. My goal is to master this discipline and develop structured prompt frameworks that produce reliable, high-value outcomes.
+            </p>
+          </div>
+
+          <div>
+            <div class="info-card">
+              <div class="info-card-header">
+                <span>ACADEMIC OVERVIEW</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">INSTITUTION</div>
+                <div class="info-value">Swami Vivekananda University</div>
+                <div class="info-sub">Barrackpore Campus</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">DEGREE PROGRAM</div>
+                <div class="info-value">Bachelor of Computer Applications (BCA)</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">ACADEMIC SESSION</div>
+                <div class="info-value" style="color: var(--text-cyan);">2025 — 2029</div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-label">PRIMARY FOCUS</div>
+                <div class="info-value">Prompt Design • LLM Workflows • AI Logic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         PROMPT ENGINEERING LAB / PROJECTS
+         ========================================================================== -->
+    <section class="section reveal" id="projects">
+      <div class="container">
+        
+        <div class="lab-header-row">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              EXPERIMENTS &amp; WORKFLOWS
+            </div>
+            <h2 class="section-title">PROMPT ENGINEERING LAB</h2>
+            <p class="section-sub">A curated collection of experiments in designing better, structured AI interactions.</p>
+          </div>
+
+          <!-- Controls: Category Filter + Search -->
+          <div class="lab-controls">
+            <div class="filter-group" id="filter-group">
+              <button class="filter-btn active" data-filter="all">ALL EXPERIMENTS</button>
+              <button class="filter-btn" data-filter="role">ROLE PROMPTING</button>
+              <button class="filter-btn" data-filter="opt">OPTIMIZATION</button>
+              <button class="filter-btn" data-filter="content">CONTENT CREATION</button>
+              <button class="filter-btn" data-filter="research">RESEARCH</button>
+            </div>
+
+            <div class="search-box">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="project-search" class="search-input" placeholder="Search lab prompts..." aria-label="Search prompt experiments" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="projects-grid" id="projects-grid">
+          
+          <!-- PROJECT 01 -->
+          <div class="project-card" data-category="role" data-id="p1" id="project-card-1">
+            <div>
+              <div class="project-card-top">
+                <span class="project-num">EXPERIMENT // 01</span>
+                <span class="badge badge-accent">ROLE SYSTEM</span>
+              </div>
+              <h3 class="project-title">AI ROLE ARCHITECT</h3>
+              <p class="project-desc">
+                Designing structured role-based prompts that give AI a specific expertise, personality, step-by-step reasoning constraints, and task context.
+              </p>
+              <div class="project-tags">
+                <span class="badge">ROLE PROMPTING</span>
+                <span class="badge">CONTEXT</span>
+                <span class="badge">AI</span>
+              </div>
+            </div>
+
+            <div class="project-actions">
+              <button class="btn-view-prompt" onclick="openPromptModal('p1')">
+                <span>VIEW PROMPT</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+
+              <button class="btn-quick-copy" onclick="quickCopyPrompt(event, 'p1')" title="Quick copy prompt">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>COPY</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PROJECT 02 -->
+          <div class="project-card" data-category="opt" data-id="p2" id="project-card-2">
+            <div>
+              <div class="project-card-top">
+                <span class="project-num">EXPERIMENT // 02</span>
+                <span class="badge badge-cyan">OPTIMIZER</span>
+              </div>
+              <h3 class="project-title">PROMPT OPTIMIZER</h3>
+              <p class="project-desc">
+                Transforming vague instructions into precise, high-yield prompts using context injection, negative constraints, few-shot examples and schema definitions.
+              </p>
+              <div class="project-tags">
+                <span class="badge">OPTIMIZATION</span>
+                <span class="badge">STRUCTURE</span>
+                <span class="badge">LLM</span>
+              </div>
+            </div>
+
+            <div class="project-actions">
+              <button class="btn-view-prompt" onclick="openPromptModal('p2')">
+                <span>VIEW PROMPT</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+
+              <button class="btn-quick-copy" onclick="quickCopyPrompt(event, 'p2')" title="Quick copy prompt">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>COPY</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PROJECT 03 -->
+          <div class="project-card" data-category="content" data-id="p3" id="project-card-3">
+            <div>
+              <div class="project-card-top">
+                <span class="project-num">EXPERIMENT // 03</span>
+                <span class="badge badge-accent">CREATIVE ENGINE</span>
+              </div>
+              <h3 class="project-title">CONTENT ENGINE</h3>
+              <p class="project-desc">
+                Creating reusable AI prompts for generating structured social media content while maintaining tone, audience segmentation and consistent brand identity.
+              </p>
+              <div class="project-tags">
+                <span class="badge">CONTENT</span>
+                <span class="badge">CREATIVE AI</span>
+                <span class="badge">AUTOMATION</span>
+              </div>
+            </div>
+
+            <div class="project-actions">
+              <button class="btn-view-prompt" onclick="openPromptModal('p3')">
+                <span>VIEW PROMPT</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+
+              <button class="btn-quick-copy" onclick="quickCopyPrompt(event, 'p3')" title="Quick copy prompt">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>COPY</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PROJECT 04 -->
+          <div class="project-card" data-category="research" data-id="p4" id="project-card-4">
+            <div>
+              <div class="project-card-top">
+                <span class="project-num">EXPERIMENT // 04</span>
+                <span class="badge badge-cyan">ANALYSIS LAB</span>
+              </div>
+              <h3 class="project-title">RESEARCH ASSISTANT</h3>
+              <p class="project-desc">
+                Designing prompts that help AI organize multi-source research, synthesize dense academic papers, extract key citations and produce structured executive outputs.
+              </p>
+              <div class="project-tags">
+                <span class="badge">RESEARCH</span>
+                <span class="badge">SUMMARIZATION</span>
+                <span class="badge">AI WORKFLOW</span>
+              </div>
+            </div>
+
+            <div class="project-actions">
+              <button class="btn-view-prompt" onclick="openPromptModal('p4')">
+                <span>VIEW PROMPT</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+
+              <button class="btn-quick-copy" onclick="quickCopyPrompt(event, 'p4')" title="Quick copy prompt">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>COPY</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         SKILLS SECTION
+         ========================================================================== -->
+    <section class="section reveal" id="skills">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          CAPABILITIES
+        </div>
+        <h2 class="section-title">SKILLS &amp; FOCUS</h2>
+        <p class="section-sub">Technical proficiencies, AI engineering techniques, and core computer application foundations.</p>
+
+        <div class="skills-grid">
+          
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">Prompt Engineering</div>
+              <div class="skill-category">CORE DISCIPLINE</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">Generative AI</div>
+              <div class="skill-category">LLM &amp; DIFFUSION</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">AI Tools</div>
+              <div class="skill-category">PRODUCTIVITY &amp; LABS</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">Creative Problem Solving</div>
+              <div class="skill-category">COGNITIVE METHODOLOGY</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">Content Creation</div>
+              <div class="skill-category">STRUCTURED MEDIA</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <div>
+              <div class="skill-name">Basic Programming</div>
+              <div class="skill-category">LOGIC &amp; ALGORITHMS</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">HTML &amp; CSS</div>
+              <div class="skill-category">FRONTEND BASICS</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">JavaScript</div>
+              <div class="skill-category">INTERACTIVITY</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">C Language</div>
+              <div class="skill-category">BCA FOUNDATION</div>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+            </div>
+            <div>
+              <div class="skill-name">Python Fundamentals</div>
+              <div class="skill-category">AI SCRIPTING</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         EDUCATION SECTION
+         ========================================================================== -->
+    <section class="section reveal" id="education">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          ACADEMICS
+        </div>
+        <h2 class="section-title">EDUCATION</h2>
+        <p class="section-sub">Formal academic training and foundation in computer applications and technology.</p>
+
+        <div class="timeline">
+          <div class="timeline-track"></div>
+
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3 class="timeline-school">SWAMI VIVEKANANDA UNIVERSITY</h3>
+                <span class="badge badge-accent">2025 — 2029</span>
+              </div>
+              <div class="timeline-degree">Bachelor of Computer Applications — BCA</div>
+              <div class="timeline-loc">Barrackpore Campus, West Bengal</div>
+              <p class="timeline-desc">
+                Currently building a strong foundation in computer applications, programming paradigms, web technologies, database architectures, and emerging Artificial Intelligence concepts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         AI / PROMPTING PHILOSOPHY SECTION
+         ========================================================================== -->
+    <section class="section reveal">
+      <div class="container">
+        <div class="philosophy-card-main">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            PHILOSOPHY &amp; APPROACH
+          </div>
+          <h2 class="section-title" style="margin-top: 10px;">THINK. STRUCTURE. PROMPT.</h2>
+          <p style="font-size: 1.125rem; color: #cbd5e1; max-width: 720px; line-height: 1.7;">
+            "Good prompts are more than instructions. They are a way of translating human intent into structured communication with AI."
+          </p>
+
+          <div class="philosophy-grid">
+            <div class="phil-step">
+              <div class="phil-step-num">01 — THINK</div>
+              <div class="phil-step-title">Understand the Problem</div>
+              <p class="phil-step-desc">Deconstruct the objective, target audience, cognitive constraints, and exact success criteria before generating tokens.</p>
+            </div>
+
+            <div class="phil-step">
+              <div class="phil-step-num">02 — STRUCTURE</div>
+              <div class="phil-step-title">Define Context &amp; Rules</div>
+              <p class="phil-step-desc">Establish strict boundary rules, negative examples, schema constraints, and format expectations to eliminate ambiguity.</p>
+            </div>
+
+            <div class="phil-step">
+              <div class="phil-step-num">03 — PROMPT</div>
+              <div class="phil-step-title">Guide with Precision</div>
+              <p class="phil-step-desc">Execute modular system instructions and contextual variables that guide AI models toward reproducible, high-value results.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==========================================================================
+         CONTACT SECTION
+         ========================================================================== -->
+    <section class="section reveal" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              GET IN TOUCH
+            </div>
+            <h2 class="section-title">LET'S CONNECT</h2>
+            <p style="font-size: 1.0625rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7;">
+              Have an idea, project or opportunity? I'd love to connect and discuss AI prompting, collaborations, or internships.
+            </p>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <a href="mailto:banikchandrima00@gmail.com" class="btn btn-accent" id="contact-cta-btn">
+                GET IN TOUCH →
+              </a>
+              <a href="tel:8365363737" class="btn btn-secondary">
+                CALL DIRECTLY
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <a href="tel:8365363737" class="contact-item" id="phone-link">
+              <div class="contact-item-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">PHONE NUMBER</div>
+                <div class="contact-item-value">8365363737</div>
+              </div>
+            </a>
+
+            <a href="mailto:banikchandrima00@gmail.com" class="contact-item" id="email-link">
+              <div class="contact-item-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">EMAIL ADDRESS</div>
+                <div class="contact-item-value">banikchandrima00@gmail.com</div>
+              </div>
+            </a>
+
+            <div class="contact-item" style="cursor: default;">
+              <div class="contact-item-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">LOCATION</div>
+                <div class="contact-item-value">Barrackpore, Kolkata, India</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">CHANDRIMA BANIK</div>
+          <div class="footer-tagline">Prompt Engineer • BCA Student • AI Enthusiast</div>
+        </div>
+
+        <div class="footer-copy">
+          &copy; 2026 Chandrima Banik. All rights reserved.
+        </div>
+
+        <button class="back-to-top-btn" id="back-to-top-btn" onclick="scrollToTop()">
+          <span>BACK TO TOP</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       PROJECT PROMPT MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-window">
+      
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span class="badge badge-accent" id="modal-tag">PROMPT SCHEMA</span>
+          <h3 class="modal-title" id="modal-title">AI ROLE ARCHITECT</h3>
+        </div>
+        <button class="modal-close-btn" id="modal-close-x" onclick="closePromptModal()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc" id="modal-desc">
+          Structured system instructions to anchor an LLM in a defined domain persona.
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">PROMPT TEMPLATE</span>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-cyan);" id="modal-model-badge">OPTIMIZED FOR LLMS</span>
+        </div>
+
+        <div class="prompt-code-container" id="modal-prompt-content">
+          <!-- Prompt text injected dynamically -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);" id="modal-wordcount">~150 tokens</span>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-icon" onclick="closePromptModal()" style="padding: 10px 18px;">
+            CLOSE
+          </button>
+          <button class="btn btn-primary" id="modal-copy-btn" onclick="copyCurrentModalPrompt()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>COPY PROMPT</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast notification area -->
+  <div id="toast-container"></div>
+
+  <!-- ==========================================================================
+       VANILLA JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    // Prompt Database
+    const PROMPTS_DATABASE = {
+      p1: {
+        title: "AI ROLE ARCHITECT",
+        tag: "ROLE PROMPTING",
+        desc: "Designing structured role-based prompts that give AI a specific expertise, personality and task context.",
+        model: "GEMINI 2.0 / CLAUDE 3.5 / GPT-4",
+        prompt: `You are an elite Senior Solutions Architect and Technical Communicator with 15+ years of systems design experience.
+
+[CONTEXT & OBJECTIVE]
+Your task is to analyze user technical queries, break down complex architectural trade-offs, and recommend clean, modular design patterns.
+
+[BEHAVIORAL GUIDELINES]
+1. Tone: Authoritative, objective, structured, and pedagogical.
+2. Structure:
+   - Step 1: Core Problem Formulation
+   - Step 2: Key Architectural Trade-offs (Latency vs. Scalability vs. Cost)
+   - Step 3: Recommended Blueprint & Step-by-Step Implementation
+   - Step 4: Edge Cases & Failure Mitigation Strategies
+3. Constraints:
+   - Never use vague hand-wavy descriptions; specify concrete protocols, data structures, and formats.
+   - Limit introductory polite filler; begin directly with the architectural analysis.
+
+[INPUT VARIABLE]
+Problem to analyze: {{USER_TECHNICAL_PROBLEM}}`
+      },
+      p2: {
+        title: "PROMPT OPTIMIZER",
+        tag: "OPTIMIZATION",
+        desc: "Transforming vague instructions into precise prompts using context, constraints, examples and clearly defined outputs.",
+        model: "ZERO-SHOT / FEW-SHOT ENGINE",
+        prompt: `Act as a Meta-Prompt Engineer. Analyze the raw, unstructured request below and rewrite it into a production-grade, highly reliable system prompt.
+
+[OPTIMIZATION FRAMEWORK]
+1. Explicit Persona & Domain Authority Assignment
+2. Context Setting & Task Boundary Definitions
+3. Negative Constraints (Explicitly stating what the model MUST NOT do)
+4. Few-Shot In-Context Examples (Input -> Output demonstrations)
+5. Structured Output Specification (e.g., Markdown table, JSON schema, or strict section headers)
+
+[RAW USER INPUT TO TRANSFORM]
+"{{RAW_UNSTRUCTURED_INSTRUCTION}}"
+
+[DELIVERABLE]
+Output the optimized prompt wrapped in markdown code blocks with clear variable placeholders for immediate deployment.`
+      },
+      p3: {
+        title: "CONTENT ENGINE",
+        tag: "CREATIVE AI",
+        desc: "Creating reusable AI prompts for generating structured social media content while maintaining tone, audience and brand consistency.",
+        model: "CREATIVE AUTOMATION",
+        prompt: `You are a Creative Content Strategist & Technical Storyteller specializing in AI and software engineering narratives.
+
+[GOAL]
+Transform complex technical updates or coding concepts into high-engagement, value-dense content tailored for LinkedIn and technical communities.
+
+[AUDIENCE & VOICE]
+- Audience: Software engineers, tech founders, computer science students, and AI builders.
+- Voice: Intellectual, curiosity-driven, punchy, devoid of corporate buzzwords or generic hype verbs (e.g., avoid "supercharge", "delve", "game-changer").
+
+[CONTENT SPECIFICATION]
+For topic: "{{TOPIC_OR_CONCEPT}}"
+Provide:
+1. Hook: High-contrast single-sentence curiosity hook.
+2. Core Insight: 3 concise bullet points explaining "why this matters".
+3. Practical Application: A 2-line code snippet or step-by-step mental model.
+4. Discussion Question: One open-ended question to spark thoughtful peer comments.`
+      },
+      p4: {
+        title: "RESEARCH ASSISTANT",
+        tag: "RESEARCH & SUMMARIZATION",
+        desc: "Designing prompts that help AI organize research, summarize information and produce structured outputs.",
+        model: "LONG-CONTEXT SYNTHESIZER",
+        prompt: `You are an Academic Research Analyst. Your objective is to digest dense technical literature or source texts and produce an executive distillation.
+
+[PROCESSING PROTOCOL]
+1. Executive Summary: Maximum 3 sentences explaining core thesis.
+2. Core Methodology: Key techniques or frameworks utilized.
+3. Quantitative Findings: Extract specific benchmark numbers, metrics, or experimental evidence.
+4. Critical Limitations: Note any stated assumptions, edge-case bottlenecks, or unaddressed questions.
+5. Key Takeaway & Next Actions: 3 actionable takeaways for developers.
+
+[CONSTRAINTS]
+- Every summary point must be directly substantiated by the input text.
+- If information is missing or ambiguous, state "Not specified in source" rather than hallucinating.
+
+[SOURCE TEXT]
+{{PASTE_RESEARCH_OR_ARTICLE_HERE}}`
+      }
+    };
+
+    let activeModalPromptId = null;
+
+    // 1. Mouse Cursor Follow Glow
+    const cursorGlow = document.getElementById('cursor-glow');
+    if (window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('mousemove', (e) => {
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
+      }, { passive: true });
+    } else {
+      cursorGlow.style.display = 'none';
+    }
+
+    // 2. Navbar Background on Scroll & Active Navigation Link Spy
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    window.addEventListener('scroll', () => {
+      // Navbar blur
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // ScrollSpy
+      let currentSectionId = '';
+      const scrollPosition = window.scrollY + 200;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSectionId) {
+          link.classList.add('active');
+        }
+      });
+    }, { passive: true });
+
+    // 3. Mobile Hamburger Menu
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function openMobileMenu() {
+      mobileDrawer.classList.add('open');
+      mobileBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileDrawer.classList.remove('open');
+      mobileBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (menuToggleBtn) menuToggleBtn.addEventListener('click', openMobileMenu);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeMobileMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
+    mobileLinks.forEach(l => l.addEventListener('click', closeMobileMenu));
+
+    // 4. Filter and Search Interaction in Projects Lab
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('project-search');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    let currentFilter = 'all';
+    let currentSearchTerm = '';
+
+    function filterProjects() {
+      projectCards.forEach((card) => {
+        const category = card.getAttribute('data-category');
+        const textContent = card.innerText.toLowerCase();
+        
+        const matchesFilter = (currentFilter === 'all') || (category === currentFilter);
+        const matchesSearch = textContent.includes(currentSearchTerm.toLowerCase());
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        filterProjects();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearchTerm = e.target.value;
+        filterProjects();
+      });
+    }
+
+    // 5. Modal Logic
+    const modalOverlay = document.getElementById('prompt-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalTag = document.getElementById('modal-tag');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalModelBadge = document.getElementById('modal-model-badge');
+    const modalPromptContent = document.getElementById('modal-prompt-content');
+    const modalWordcount = document.getElementById('modal-wordcount');
+
+    function openPromptModal(promptId) {
+      const data = PROMPTS_DATABASE[promptId];
+      if (!data) return;
+
+      activeModalPromptId = promptId;
+      modalTitle.textContent = data.title;
+      modalTag.textContent = data.tag;
+      modalDesc.textContent = data.desc;
+      modalModelBadge.textContent = data.model;
+      modalPromptContent.textContent = data.prompt;
+      
+      const words = data.prompt.trim().split(/\\s+/).length;
+      modalWordcount.textContent = `Estimated ${Math.round(words * 1.3)} tokens (${words} words)`;
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePromptModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      activeModalPromptId = null;
+    }
+
+    // Close on click outside window
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        closePromptModal();
+      }
+    });
+
+    // Close on ESC key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (modalOverlay.classList.contains('active')) {
+          closePromptModal();
+        }
+        if (mobileDrawer.classList.contains('open')) {
+          closeMobileMenu();
+        }
+      }
+    });
+
+    // 6. Copy to Clipboard and Toast Feedback
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <svg class="toast-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        textarea.style.top = '-999999px';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        return new Promise((resolve, reject) => {
+          document.execCommand('copy') ? resolve() : reject();
+          textarea.remove();
+        });
+      }
+    }
+
+    function copyCurrentModalPrompt() {
+      if (!activeModalPromptId) return;
+      const promptText = PROMPTS_DATABASE[activeModalPromptId].prompt;
+      copyToClipboard(promptText).then(() => {
+        showToast("Prompt copied to clipboard");
+        const copyBtn = document.getElementById('modal-copy-btn');
+        const origHtml = copyBtn.innerHTML;
+        copyBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>COPIED!</span>
+        `;
+        setTimeout(() => {
+          copyBtn.innerHTML = origHtml;
+        }, 2000);
+      }).catch(() => {
+        showToast("Unable to copy prompt automatically");
+      });
+    }
+
+    function quickCopyPrompt(event, promptId) {
+      event.stopPropagation();
+      const promptData = PROMPTS_DATABASE[promptId];
+      if (!promptData) return;
+
+      copyToClipboard(promptData.prompt).then(() => {
+        showToast(`Copied ${promptData.title} prompt`);
+        const target = event.currentTarget;
+        const origText = target.innerHTML;
+        target.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span style="color:#34d399;">COPIED</span>
+        `;
+        setTimeout(() => {
+          target.innerHTML = origText;
+        }, 2000);
+      });
+    }
+
+    // 7. Scroll Reveal Animation using IntersectionObserver
+    const observerOptions = {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 8. Back to Top
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // 9. Card click opens modal
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-quick-copy')) return;
+        const id = card.getAttribute('data-id');
+        if (id) openPromptModal(id);
+      });
+    });
+  </script>
+</body>
+</html>
